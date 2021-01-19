@@ -3,6 +3,8 @@ pragma experimental ABIEncoderV2;
 
 import { BaselinedRecordsStorages } from "./baselined-records/commons/BaselinedRecordsStorages.sol";
 
+import { BrToken } from "./BrToken.sol";
+
 
 /***
  * @title - Tokenization contract
@@ -11,5 +13,14 @@ import { BaselinedRecordsStorages } from "./baselined-records/commons/BaselinedR
 contract Tokenization is BaselinedRecordsStorages {
 
     constructor() public {}
+
+    /**
+     * @notice - Create a new BrToken
+     * @notice - Parameters are the BaselinedRecords related parameters. 
+     */
+    function createBrToken() public returns (bool) {
+        /// [Todo]: Assign the BaselinedRecords related parameters when a new BrToken is deployed
+        BrToken brToken = new BrToken();
+    }
 
 }
