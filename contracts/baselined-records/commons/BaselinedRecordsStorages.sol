@@ -4,6 +4,8 @@ pragma experimental ABIEncoderV2;
 import { BaselinedRecordsObjects } from "./BaselinedRecordsObjects.sol";
 
 
-contract BaselinedRecordsStorages {
+contract BaselinedRecordsStorages is BaselinedRecordsObjects {
+
+    mapping (uint8 => BaselinedRecord) baselinedRecords;  /// [Key]: baselinedRecordId
 
 }

@@ -4,7 +4,7 @@ pragma experimental ABIEncoderV2;
 
 contract BaselinedRecordsObjects {
 
-    struct Something {  /// [Key]: 
+    struct BaselinedRecord {  /// [Key]: baselinedRecordId  
         address userAddress;
         uint amount;
     }
