@@ -3,6 +3,8 @@ pragma experimental ABIEncoderV2;
 
 import { BaselinedRecordsStorages } from "./commons/BaselinedRecordsStorages.sol";
 
+import { BrToken } from "../BrToken.sol";
+
 
 /***
  * @title - Tokenization contract
@@ -17,12 +19,13 @@ contract BaselinedRecords is BaselinedRecordsStorages {
     /**
      * @notice - Save a new baselined-records
      */
-    function saveBaselinedRecord() public returns (bool) {
+    function saveBaselinedRecord(BrToken _brToken) public returns (bool) {
         uint8 newBaselinedRecordId = getNextBaselinedRecordId();
         currentBaselinedRecordId++;
 
         /// [Todo]: Add properties for saving a new BaselinedRecord
         BaselinedRecord storage baselinedRecord = baselinedRecords[newBaselinedRecordId];
+        baselinedRecord.brToken = _brToken;
     }
 
 

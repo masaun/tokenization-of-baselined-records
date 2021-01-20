@@ -23,7 +23,7 @@ contract Tokenization is BaselinedRecords {
         BrToken brToken = new BrToken();
 
         /// [Todo]:
-        saveBaselinedRecord();
+        saveBaselinedRecord(brToken);
     }
 
 }
