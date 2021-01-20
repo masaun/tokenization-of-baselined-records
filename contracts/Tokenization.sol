@@ -18,9 +18,9 @@ contract Tokenization is BaselinedRecords {
      * @notice - Create a new BrToken
      * @notice - Parameters are the BaselinedRecords related parameters. 
      */
-    function createBrToken() public returns (bool) {
+    function createBrToken(address ownerOfBasedlineAsset, string memory offChainBasedlineAssetIpfsHash) public returns (bool) {
         /// [Todo]: Assign the BaselinedRecords related parameters when a new BrToken is deployed
-        BrToken brToken = new BrToken();
+        BrToken brToken = new BrToken(ownerOfBasedlineAsset, offChainBasedlineAssetIpfsHash);
 
         /// [Todo]:
         saveBaselinedRecord(brToken);
