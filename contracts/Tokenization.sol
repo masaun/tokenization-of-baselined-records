@@ -1,7 +1,7 @@
 pragma solidity ^0.6.9;
 pragma experimental ABIEncoderV2;
 
-import { BaselinedRecordsStorages } from "./baselined-records/commons/BaselinedRecordsStorages.sol";
+import { BaselinedRecords } from "./baselined-records/BaselinedRecords.sol";
 
 import { BrToken } from "./BrToken.sol";
 
@@ -10,7 +10,7 @@ import { BrToken } from "./BrToken.sol";
  * @title - Tokenization contract
  * @notice - This is the factory contract in order to create BrToken
  **/
-contract Tokenization is BaselinedRecordsStorages {
+contract Tokenization is BaselinedRecords {
 
     constructor() public {}
 
@@ -21,6 +21,9 @@ contract Tokenization is BaselinedRecordsStorages {
     function createBrToken() public returns (bool) {
         /// [Todo]: Assign the BaselinedRecords related parameters when a new BrToken is deployed
         BrToken brToken = new BrToken();
+
+        /// [Todo]:
+        saveBaselinedRecord();
     }
 
 }
