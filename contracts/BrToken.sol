@@ -15,7 +15,7 @@ contract BrToken is ERC721, AccessControl {
 
     constructor(
         address to,
-        string memory ipfsHash        
+        string memory ipfsHash 
     ) 
         public
         ERC721("Baselined Record Token", "BRT") 
@@ -25,5 +25,8 @@ contract BrToken is ERC721, AccessControl {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);        
     }
 
+
+    function something() public returns (bool) {}
+    
 
 }
