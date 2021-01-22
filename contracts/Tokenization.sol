@@ -38,9 +38,6 @@ contract Tokenization is BaselinedRecords {
         bytes memory _metadata;
         (_orgAddress, _name, _messagingEndpoint, _whisperKey, _zkpPublicKey, _metadata) = orgRegistry.getOrg(organization);
 
-        /// [Todo]: Get metadataOfBaselinedRecords
-        bytes32 metadataOfBaselinedRecords;
-
         /// Assign the BaselinedRecords related parameters when a new BrToken is deployed
         BrToken brToken = new BrToken(_orgAddress, metadataOfBaselinedRecords);
 
