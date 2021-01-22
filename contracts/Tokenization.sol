@@ -28,8 +28,19 @@ contract Tokenization is BaselinedRecords {
      * @notice - Parameters are the BaselinedRecords related parameters. 
      */
     function createBrToken(address organization, bytes32 metadataOfBaselinedRecords) public returns (bool) {
+        address _orgAddress;
+        bytes32 _name;
+        bytes memory _messagingEndpoint;
+        bytes memory _whisperKey;
+        bytes memory _zkpPublicKey;
+        bytes memory _metadata;
+        (_orgAddress, _name, _messagingEndpoint, _whisperKey, _zkpPublicKey, _metadata) = orgRegistry.getOrg(organization);
+
+        /// [Todo]: Get metadataOfBaselinedRecords
+        bytes32 metadataOfBaselinedRecords;
+
         /// [Todo]: Assign the BaselinedRecords related parameters when a new BrToken is deployed
-        BrToken brToken = new BrToken(organization, metadataOfBaselinedRecords);
+        BrToken brToken = new BrToken(_orgAddress, metadataOfBaselinedRecords);
 
         /// [Todo]:
         saveBaselinedRecord(brToken);
