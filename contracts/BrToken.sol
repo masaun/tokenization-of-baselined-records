@@ -16,7 +16,7 @@ contract BrToken is ERC20, AccessControl {
 
     constructor(
         address organization,  /// [Note]: "orgAddress" in the Org struct in the OrgRegistry.sol is assigned
-        bytes32 memory metadataOfBaselinedRecords
+        bytes32 metadataOfBaselinedRecords
     ) 
         public
         ERC20("Baselined Records Token", "BLR")
