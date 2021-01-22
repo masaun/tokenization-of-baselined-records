@@ -1,7 +1,8 @@
 pragma solidity ^0.6.9;
 pragma experimental ABIEncoderV2;
 
-import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+//import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
 
@@ -10,7 +11,7 @@ import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol"
  * @title - BrToken contract
  * @notice - This is the smart contract that retain the baselined-records
  **/
-contract BrToken is ERC721, AccessControl {
+contract BrToken is ERC20, AccessControl {
     using SafeMath for uint;
 
     constructor(
@@ -18,7 +19,7 @@ contract BrToken is ERC721, AccessControl {
         string memory ipfsHash 
     ) 
         public
-        ERC721("Baselined Record Token", "BRT") 
+        ERC20("Baselined Records Token", "BLR")
     {
         /// Grant the creator of this contract the default admin role: it will be able
         /// to grant and revoke any roles
