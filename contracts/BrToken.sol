@@ -15,15 +15,15 @@ contract BrToken is ERC20, AccessControl {
     using SafeMath for uint;
 
     constructor(
-        address to,
-        string memory ipfsHash 
+        address organization,  /// [Note]: "orgAddress" in the Org struct in the OrgRegistry.sol is assigned
+        bytes32 memory metadataOfBaselinedRecords
     ) 
         public
         ERC20("Baselined Records Token", "BLR")
     {
         /// Grant the creator of this contract the default admin role: it will be able
         /// to grant and revoke any roles
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);        
+        _setupRole(DEFAULT_ADMIN_ROLE, organization);        
     }
 
 
