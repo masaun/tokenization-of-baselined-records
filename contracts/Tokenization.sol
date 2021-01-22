@@ -26,6 +26,8 @@ contract Tokenization is BaselinedRecords {
     /**
      * @notice - Create a new BrToken
      * @notice - Parameters are the BaselinedRecords related parameters. 
+     * @param organization - Organization's wallet address
+     * @param metadataOfBaselinedRecords - Metadata of the baselined records (bytes32 type data) that assigned from frontend
      */
     function createBrToken(address organization, bytes32 metadataOfBaselinedRecords) public returns (bool) {
         address _orgAddress;
@@ -39,10 +41,10 @@ contract Tokenization is BaselinedRecords {
         /// [Todo]: Get metadataOfBaselinedRecords
         bytes32 metadataOfBaselinedRecords;
 
-        /// [Todo]: Assign the BaselinedRecords related parameters when a new BrToken is deployed
+        /// Assign the BaselinedRecords related parameters when a new BrToken is deployed
         BrToken brToken = new BrToken(_orgAddress, metadataOfBaselinedRecords);
 
-        /// [Todo]:
+        /// Save metadata of Baselined Record
         saveBaselinedRecord(brToken);
     }
 
