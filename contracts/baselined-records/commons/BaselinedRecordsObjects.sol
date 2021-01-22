@@ -8,8 +8,8 @@ contract BaselinedRecordsObjects {
 
     struct BaselinedRecord {  /// [Key]: baselinedRecordId
         BrToken brToken;
-        address userAddress;
-        uint amount;
+        address orgAddress;   /// Organization address
+        bytes32 metadataOfBaselinedRecords;
     }
 
 }

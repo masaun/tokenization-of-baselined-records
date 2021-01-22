@@ -19,13 +19,15 @@ contract BaselinedRecords is BaselinedRecordsStorages {
     /**
      * @notice - Save a new baselined-records
      */
-    function saveBaselinedRecord(BrToken _brToken) public returns (bool) {
+    function _saveBaselinedRecord(BrToken _brToken, address _orgAddress, bytes32 _metadataOfBaselinedRecords) internal returns (bool) {
         uint8 newBaselinedRecordId = getNextBaselinedRecordId();
         currentBaselinedRecordId++;
 
         /// [Todo]: Add properties for saving a new BaselinedRecord
         BaselinedRecord storage baselinedRecord = baselinedRecords[newBaselinedRecordId];
         baselinedRecord.brToken = _brToken;
+        baselinedRecord.orgAddress = _orgAddress;
+        baselinedRecord.metadataOfBaselinedRecords = _metadataOfBaselinedRecords;
     }
 
 
