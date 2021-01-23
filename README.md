@@ -64,7 +64,12 @@ $ ganache-cli
 ***
 
 ## 【References】
-- Baseline Protocol
-  - Smart-contract of the Baseline Protocol：https://github.com/ethereum-oasis/baseline/tree/master/core 
-  - Workflow：https://github.com/ethereum-oasis/baseline/tree/master/core#baseline-protocol
-  - Concept of `Tokenization Of Baselined Records` ：https://gitcoin.co/issue/ethereum-oasis/baseline-roadmap/163/100024426
+- Baseline Protocol   
+  - Smart-contract of the Baseline Protocol：
+    https://github.com/ethereum-oasis/baseline/tree/master/core 
+
+  - Workflow：
+    https://github.com/ethereum-oasis/baseline/tree/master/core#baseline-protocol  
+
+  - Concept of `Tokenization Of Baselined Records` ：
+    https://gitcoin.co/issue/ethereum-oasis/baseline-roadmap/163/100024426  
