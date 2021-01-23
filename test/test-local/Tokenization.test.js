@@ -46,9 +46,16 @@ contract("Tokenization", function(accounts) {
 
     describe("[TK01]: The solution must support the deployment of one or many baselined assets within one single token contract.", () => {
         it("Create a new BrToken with multiple baselined records", async () => {
-            const baselinedRecord1 = web3.utils.fromAscii("Baselined Record 1");  /// [Note]: Convert from string to bytes32 
-            const baselinedRecord2 = web3.utils.fromAscii("Baselined Record 2");  /// [Note]: Convert from string to bytes32
-            const baselinedRecord3 = web3.utils.fromAscii("Baselined Record 3");  /// [Note]: Convert from string to bytes32
+            const baselinedRecord1 = web3.utils.asciiToHex("Baselined Record 1");  /// [Note]: Convert from string to bytes32 
+            const baselinedRecord2 = web3.utils.asciiToHex("Baselined Record 2");  /// [Note]: Convert from string to bytes32
+            const baselinedRecord3 = web3.utils.asciiToHex("Baselined Record 3");  /// [Note]: Convert from string to bytes32
+
+            // const baselinedRecord1 = web3.utils.fromAscii("Baselined Record 1");  /// [Note]: Convert from string to bytes32 
+            // const baselinedRecord2 = web3.utils.fromAscii("Baselined Record 2");  /// [Note]: Convert from string to bytes32
+            // const baselinedRecord3 = web3.utils.fromAscii("Baselined Record 3");  /// [Note]: Convert from string to bytes32
+
+            console.log('=== baselinedRecord1 ===', baselinedRecord1);
+
             let _metadataOfBaselinedRecords = [baselinedRecord1, baselinedRecord2, baselinedRecord3];        
 
             await tokenization.createBrToken(_metadataOfBaselinedRecords, { from: accounts[0] });
