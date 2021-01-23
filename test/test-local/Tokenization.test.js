@@ -74,6 +74,17 @@ contract("Tokenization", function(accounts) {
 
             await tokenization.createBrToken(_metadataOfBaselinedRecords, { from: accounts[0] });
         });
+
+        it("Check event of BaselinedRecordCreated", async () => {
+            /// [Retrieved-Event]: The "BaselinedRecordCreated" event of the BasedRecords.sol
+            let events = await baselinedRecords.getPastEvents('BaselinedRecordCreated', {
+                filter: {}, // Using an array means OR: e.g. 20 or 23
+                fromBlock: 0,
+                toBlock: 'latest'
+            });
+            console.log('=== events ===', events);  /// [Result]: Successful to retrieve event log
+        });
+
     });
 
 
