@@ -17,9 +17,9 @@ contract BaselinedRecords is BaselinedRecordsStorages {
     constructor() public {}
 
     /**
-     * @notice - Save a new baselined-records
+     * @notice - Create a new baselined-record
      */
-    function _saveBaselinedRecord(BrToken _brToken, address _orgAddress, bytes32 _metadataOfBaselinedRecords) internal returns (bool) {
+    function createNewBaselinedRecord(BrToken _brToken, address _orgAddress, bytes32 _metadataOfBaselinedRecords) public returns (bool) {
         uint8 newBaselinedRecordId = getNextBaselinedRecordId();
         currentBaselinedRecordId++;
 
