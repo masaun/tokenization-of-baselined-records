@@ -5,6 +5,7 @@ const web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8545'
 /// Artifact of smart contracts 
 const Tokenization = artifacts.require("Tokenization");
 const BaselinedRecords = artifacts.require("BaselinedRecords");
+const OrgRegistry = artifacts.require("OrgRegistry");
 const ERC1820Registry = artifacts.require("ERC1820Registry");
 
 
@@ -15,11 +16,13 @@ contract("Tokenization", function(accounts) {
     /// Global Tokenization contract instance
     let tokenization;
     let baselinedRecords;
+    let orgRegistry;
     let erc1820Registry;
 
     /// Global variable for each contract addresses
     let TOKENNIZATION;
     let BASELINED_RECORDS;
+    let ORG_REGISTRY;
     let ERC1820_REGISTRY;
 
     describe("Check state in advance", () => {
@@ -34,13 +37,18 @@ contract("Tokenization", function(accounts) {
             ERC1820_REGISTRY = erc1820Registry.address;
         });
 
+        it("Deploy the OrgRegistry contract instance", async () => {
+            orgRegistry = await OrgRegistry.new(ERC1820_REGISTRY, { from: accounts[0] });
+            ORG_REGISTRY = orgRegistry.address;
+        });
+
         it("Deploy the BaselinedRecords contract instance", async () => {
             baselinedRecords = await BaselinedRecords.new({ from: accounts[0] });
             BASELINED_RECORDS = baselinedRecords.address;
         });
 
         it("Deploy the Tokenization contract instance", async () => {
-            tokenization = await Tokenization.new(BASELINED_RECORDS, ERC1820_REGISTRY, { from: accounts[0] });
+            tokenization = await Tokenization.new(BASELINED_RECORDS, ORG_REGISTRY, { from: accounts[0] });
         });
     });
 
