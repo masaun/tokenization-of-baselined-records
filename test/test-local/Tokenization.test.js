@@ -44,6 +44,12 @@ contract("Tokenization", function(accounts) {
         });
     });
 
+    describe("Register a organization", () => {
+        it("Register a organization", async () => {
+            /// [Todo]: Register a organization by using OrgRegistry.sol
+        });
+    });
+
     describe("[TK01]: The solution must support the deployment of one or many baselined assets within one single token contract.", () => {
         it("Create a new BrToken with multiple baselined records", async () => {
             const baselinedRecord1 = web3.utils.asciiToHex("Baselined Record 1");  /// [Note]: Convert from string to bytes32 
