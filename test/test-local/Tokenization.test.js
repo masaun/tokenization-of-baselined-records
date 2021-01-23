@@ -22,11 +22,13 @@ contract("Tokenization", function(accounts) {
     let BASELINED_RECORDS;
     let ERC1820_REGISTRY;
 
-    describe("Setup smart-contracts", () => {
+    describe("Check state in advance", () => {
         it("Check all accounts", async () => {
-            console.log('=== accounts ===\n', accounts);
-        });        
+            console.log('\n=== accounts ===\n', accounts, '\n========================\n');
+        }); 
+    }); 
 
+    describe("Setup smart-contracts", () => {
         it("Deploy the ERC1820Registry contract instance", async () => {
             erc1820Registry = await ERC1820Registry.new({ from: accounts[0] });
             ERC1820_REGISTRY = erc1820Registry.address;
