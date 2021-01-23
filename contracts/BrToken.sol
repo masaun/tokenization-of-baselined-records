@@ -28,7 +28,7 @@ contract BrToken is ERC20, AccessControl {
         _setupRole(DEFAULT_ADMIN_ROLE, _orgAddress); 
     }
 
-    function saveBaselinedRecord(BrToken _brToken, address _orgAddress, bytes32 _metadataOfBaselinedRecords) public returns (bool) {
+    function saveBaselinedRecord(BrToken _brToken, address _orgAddress, bytes32[] memory _metadataOfBaselinedRecords) public returns (bool) {
         /// Save metadata of Baselined Record
         baselinedRecords.createNewBaselinedRecord(_brToken, _orgAddress, _metadataOfBaselinedRecords);
     }

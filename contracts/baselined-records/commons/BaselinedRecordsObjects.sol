@@ -9,7 +9,7 @@ contract BaselinedRecordsObjects {
     struct BaselinedRecord {  /// [Key]: baselinedRecordId
         BrToken brToken;
         address orgAddress;   /// Organization address
-        bytes32 metadataOfBaselinedRecords;
+        bytes32[] metadataOfBaselinedRecords;  /// [Note]: Many baselined assets can be stored into this property
     }
 
 }

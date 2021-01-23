@@ -28,9 +28,9 @@ contract Tokenization {
     /**
      * @notice - Create a new BrToken
      * @notice - msg.sender is the organization address (orgAddress)
-     * @param metadataOfBaselinedRecords - Assume that metadata of the baselined records (bytes32 type data) that assigned from frontend
+     * @param _metadataOfBaselinedRecords - Metadata of the baselined records. (single record or multiple records)
      */
-    function createBrToken(bytes32 metadataOfBaselinedRecords) public returns (bool) {
+    function createBrToken(bytes32[] memory _metadataOfBaselinedRecords) public returns (bool) {
         address _orgAddress;
         bytes32 _name;
         bytes memory _messagingEndpoint;
@@ -43,7 +43,7 @@ contract Tokenization {
         BrToken brToken = new BrToken(_orgAddress, baselinedRecords);
 
         /// Save metadata of Baselined Record
-        brToken.saveBaselinedRecord(brToken, _orgAddress, metadataOfBaselinedRecords);
+        brToken.saveBaselinedRecord(brToken, _orgAddress, _metadataOfBaselinedRecords);
     }
 
 }
