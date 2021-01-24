@@ -110,7 +110,9 @@ contract("Tokenization", function(accounts) {
 
     });
 
-
+    describe("[TK06]: The solution must support many cost-sharing options for token contracts administration and deployment.", () => {
+        /// [Todo]: Add cost-sharing method 
+    });
 
 
 
@@ -118,6 +120,9 @@ contract("Tokenization", function(accounts) {
     ///------------------------------------------
     /// Tests that has not been implemented yet.
     ///------------------------------------------
+
+    //describe("[TK01]: The solution must support the deployment of one or many baselined assets within one single token contract.", () => {});
+
     describe("[TK02]: The solution must support the deployment of many token contracts in a cost-effective way.", () => {});
 
     describe("[TK03]: The solution must provide a mechanism to administer all deployed token contracts (i.e. revoke investor access, disable trading on all contracts etc).", () => {});
@@ -126,7 +131,7 @@ contract("Tokenization", function(accounts) {
 
     describe("[TK05]: The solution must ensure consistency between the baselined asset state and the on-chain asset state.", () => {});
 
-    describe("[TK06]: The solution must support many cost-sharing options for token contracts administration and deployment.", () => {});
+    //describe("[TK06]: The solution must support many cost-sharing options for token contracts administration and deployment.", () => {});
 
     describe("[TK07]: Optional : the solution should ensure privacy of token deployment entity. Token ownership and parties involved in token transfer should remain private (i.e. who the owner is and who the token is transfered to and from should remain private).", () => {});
 
