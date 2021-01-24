@@ -52,10 +52,42 @@ contract("Tokenization", function(accounts) {
         });
     });
 
-    describe("Register a organization", () => {
+    describe("Register an organization interface (Working Group)", () => {
+        const _groupName = web3.utils.asciiToHex("Working Group 1");
+        const _tokenAddress = accounts[1];
+        const _shieldAddress = accounts[2];
+        const _verifierAddress = accounts[3];
+
+        it('Should be able to register an organization interfaces (Group)', async () => {
+            const txReceipt = await orgRegistry.registerInterfaces(_groupName,
+                                                                   _tokenAddress, 
+                                                                   _shieldAddress, 
+                                                                   _verifierAddress, 
+                                                                   { from: accounts[0] });
+        });
+
+        it('Should be able to get all interface details for an org', async () => {
+            const interfaceObjects = await orgRegistry.getInterfaceAddresses();
+            const {
+                0: names,
+                1: tokens,
+                2: shields,
+                3: verifiers
+            } = interfaceObjects;
+
+            console.log('\n=== interfaceObjects ===\n', interfaceObjects);
+ 
+            //assert.equal(web3.utils.hexToString(interfaceObjects[0]), _groupName, "groupName should be the groupName registerd");
+            assert.equal(interfaceObjects[1], _tokenAddress, "tokenAddress should be the tokenAddress registerd");
+            assert.equal(interfaceObjects[2], _shieldAddress, "shieldAddress should be the shieldAddress registerd");
+            assert.equal(interfaceObjects[3], _verifierAddress, "verifierAddress should be the verifierAddress registerd");
+        });
+    });
+
+    describe("Register an organization", () => {
         let txReceipt;
         
-        it("Register a organization", async () => {
+        it("Register an organization", async () => {
             /// Register a organization by using OrgRegistry.sol
             /// @param _address ethereum address of the registered organization
             /// @param _name name of the registered organization
