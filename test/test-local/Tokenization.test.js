@@ -115,14 +115,14 @@ contract("Tokenization", function(accounts) {
             console.log('\n=== gas-used for deployment of a new BrToken ===', gasUsedForDeployment);
         });
 
-        it("Check event of BaselinedRecordCreated", async () => {
+        it("Check event log of BaselinedRecordCreated", async () => {
             /// [Retrieved-Event]: The "BaselinedRecordCreated" event of the BasedRecords.sol
             let events = await baselinedRecords.getPastEvents('BaselinedRecordCreated', {
                 filter: {},  /// [Note]: If "index" is used for some event property, index number is specified
                 fromBlock: 0,
                 toBlock: 'latest'
             });
-            console.log('\n=== events ===', events);  /// [Result]: Successful to retrieve event log
+            console.log('\n=== Event log of BaselinedRecordCreated ===', events);  /// [Result]: Successful to retrieve event log
         });
 
     });
