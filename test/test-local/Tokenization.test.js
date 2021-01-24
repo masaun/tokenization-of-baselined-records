@@ -75,7 +75,7 @@ contract("Tokenization", function(accounts) {
                 3: verifiers
             } = interfaceObjects;
 
-            console.log('\n=== interfaceObjects ===\n', interfaceObjects);
+            console.log('\n=== registerInterface (Registered-Working Group) Objects ===\n', interfaceObjects);
  
             //assert.equal(web3.utils.hexToString(interfaceObjects[0]), _groupName, "groupName should be the groupName registerd");
             assert.equal(interfaceObjects[1], _tokenAddress, "tokenAddress should be the tokenAddress registerd");
@@ -132,9 +132,6 @@ contract("Tokenization", function(accounts) {
             const baselinedRecord1 = web3.utils.asciiToHex("Baselined Record 1");  /// [Note]: Convert from string to bytes32 
             const baselinedRecord2 = web3.utils.asciiToHex("Baselined Record 2");  /// [Note]: Convert from string to bytes32
             const baselinedRecord3 = web3.utils.asciiToHex("Baselined Record 3");  /// [Note]: Convert from string to bytes32
-            // const baselinedRecord1 = web3.utils.fromAscii("Baselined Record 1");  /// [Note]: Convert from string to bytes32 
-            // const baselinedRecord2 = web3.utils.fromAscii("Baselined Record 2");  /// [Note]: Convert from string to bytes32
-            // const baselinedRecord3 = web3.utils.fromAscii("Baselined Record 3");  /// [Note]: Convert from string to bytes32
             console.log('=== baselinedRecord1 ===', baselinedRecord1);
             console.log('=== baselinedRecord2 ===', baselinedRecord2);
             console.log('=== baselinedRecord3 ===', baselinedRecord3);
