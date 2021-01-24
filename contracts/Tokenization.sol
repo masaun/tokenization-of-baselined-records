@@ -17,12 +17,9 @@ contract Tokenization {
     BaselinedRecords public baselinedRecords;
     OrgRegistry public orgRegistry;
 
-    /**
-     * @param _erc1820 - This is for constructor of OrgRegistry.sol
-     */
-    constructor(BaselinedRecords _baselinedRecords, address _erc1820) public {
+    constructor(BaselinedRecords _baselinedRecords, OrgRegistry _orgRegistry) public {
         baselinedRecords = _baselinedRecords;
-        orgRegistry = OrgRegistry(_erc1820);
+        orgRegistry = _orgRegistry;
     }
 
     /**

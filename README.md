@@ -55,8 +55,8 @@ $ ganache-cli
 
 - 3: Execute test of the smart-contracts (on the local)
   - Test for the contract
-    `$ npm run test:**`
-    (truffle test ./test/test-local/SomeContract.test.js)
+    `$ npm run test:tokenization`
+    ($ truffle test ./test/test-local/Tokenization.test.js)
 
 <br>
 

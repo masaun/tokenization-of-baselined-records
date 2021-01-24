@@ -2,6 +2,7 @@ pragma solidity ^0.6.9;
 pragma experimental ABIEncoderV2;
 
 import { BaselinedRecordsStorages } from "./commons/BaselinedRecordsStorages.sol";
+import { BaselinedRecordsEvents } from "./commons/BaselinedRecordsEvents.sol";
 
 import { BrToken } from "../BrToken.sol";
 
@@ -10,7 +11,7 @@ import { BrToken } from "../BrToken.sol";
  * @title - Tokenization contract
  * @notice - This is the factory contract in order to create BrToken
  **/
-contract BaselinedRecords is BaselinedRecordsStorages {
+contract BaselinedRecords is BaselinedRecordsStorages, BaselinedRecordsEvents {
 
     uint8 public currentBaselinedRecordId;
 
@@ -28,6 +29,8 @@ contract BaselinedRecords is BaselinedRecordsStorages {
         baselinedRecord.brToken = _brToken;
         baselinedRecord.orgAddress = _orgAddress;
         baselinedRecord.metadataOfBaselinedRecords = _metadataOfBaselinedRecords;
+
+        emit BaselinedRecordCreated(_brToken, _orgAddress, _metadataOfBaselinedRecords);
     }
 
 
