@@ -53,6 +53,8 @@ contract("Tokenization", function(accounts) {
     });
 
     describe("Register a organization", () => {
+        let txReceipt;
+        
         it("Register a organization", async () => {
             /// Register a organization by using OrgRegistry.sol
             /// @param _address ethereum address of the registered organization
@@ -60,7 +62,7 @@ contract("Tokenization", function(accounts) {
             /// @param _messagingEndpoint public messaging endpoint
             /// @param _whisperKey public key required for message communication
             /// @param _zkpPublicKey public key required for commitments & to verify EdDSA signatures with
-            const txReceipt = await orgRegistry.registerOrg(
+            txReceipt = await orgRegistry.registerOrg(
                 accounts[1],
                 web3.utils.asciiToHex("Test Organization 1"),
                 web3.utils.asciiToHex("http://messanger-buyer-1/"),
@@ -69,6 +71,16 @@ contract("Tokenization", function(accounts) {
                 web3.utils.asciiToHex("{}"),
                 { from: accounts[0] }  /// [Note]: Caller must be owner address (deployer address)
             );
+        });
+
+        it("Check the event log of RegisterOrg", async () => {
+            /// [Retrieved-Event]: The "BaselinedRecordCreated" event of the BasedRecords.sol
+            let events = await orgRegistry.getPastEvents('RegisterOrg', {
+                filter: {},  /// [Note]: If "index" is used for some event property, index number is specified
+                fromBlock: 0,
+                toBlock: 'latest'
+            });
+            console.log('\n=== Event log of RegisterOrg ===', events);  /// [Result]: Successful to retrieve event log
         });
 
         it("orgCount should be 1", async () => {
