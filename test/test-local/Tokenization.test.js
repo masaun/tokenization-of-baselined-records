@@ -96,6 +96,9 @@ contract("Tokenization", function(accounts) {
             const _metadataOfBaselinedRecords = [baselinedRecord1, baselinedRecord2, baselinedRecord3];                 
             const txReceipt = await tokenization.createBrToken(_metadataOfBaselinedRecords, { from: accounts[1] });
             console.log('\n=== txReceipt of createBrToken() ===', txReceipt);
+
+            const gasUsedForDeployment = txReceipt.receipt.gasUsed;
+            console.log('\n=== gas-used for deployment of a new BrToken ===', gasUsedForDeployment);
         });
 
         it("Check event of BaselinedRecordCreated", async () => {
