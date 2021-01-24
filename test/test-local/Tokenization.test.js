@@ -69,7 +69,9 @@ contract("Tokenization", function(accounts) {
                 web3.utils.asciiToHex("{}"),
                 { from: accounts[0] }  /// [Note]: Caller must be owner address (deployer address)
             );
-            
+        });
+
+        it("orgCount should be 1", async () => {
             const orgCount = await orgRegistry.getOrgCount({ from: accounts[1] });  /// [Note]: Caller must be owner address (deployer address)
             console.log('=== orgCount ===', String(orgCount));                      /// [Note]: Log is converted from BN to String
 
