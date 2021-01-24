@@ -54,7 +54,30 @@ contract("Tokenization", function(accounts) {
 
     describe("Register a organization", () => {
         it("Register a organization", async () => {
-            /// [Todo]: Register a organization by using OrgRegistry.sol
+            /// Register a organization by using OrgRegistry.sol
+            /// @param _address ethereum address of the registered organization
+            /// @param _name name of the registered organization
+            /// @param _messagingEndpoint public messaging endpoint
+            /// @param _whisperKey public key required for message communication
+            /// @param _zkpPublicKey public key required for commitments & to verify EdDSA signatures with
+            const txReceipt = await orgRegistry.registerOrg(
+                accounts[1],
+                web3.utils.asciiToHex("Test Organization 1"),
+                web3.utils.asciiToHex("http://messanger-buyer-1/"),
+                web3.utils.asciiToHex('0x0471099dd873dacf9570f147b9e07ebd671e05bfa63912ee623a800ede8a294f7f60a13fadf1b53d681294cc9b9ff0a4abdf47338ff72d3c34c95cdc9328bd0128'),
+                web3.utils.asciiToHex('0x0471099dd873dacf9570f147b9e07ebd671e05bfa63912ee623a800ede8a294f7f60a13fadf1b53d681294cc9b9ff0a4abdf47338ff72d3c34c95cdc9328bd0128'),
+                web3.utils.asciiToHex("{}"),
+                { from: accounts[0] }  /// [Note]: Caller must be owner address (deployer address)
+            );
+            
+            const orgCount = await orgRegistry.getOrgCount({ from: accounts[1] });  /// [Note]: Caller must be owner address (deployer address)
+            console.log('=== orgCount ===', String(orgCount));                      /// [Note]: Log is converted from BN to String
+
+            assert.equal(
+                Number(orgCount),
+                1,
+                "orgCount should be 1"
+            );
         });
     });
 
@@ -72,13 +95,13 @@ contract("Tokenization", function(accounts) {
 
             let _metadataOfBaselinedRecords = [baselinedRecord1, baselinedRecord2, baselinedRecord3];        
 
-            await tokenization.createBrToken(_metadataOfBaselinedRecords, { from: accounts[0] });
+            await tokenization.createBrToken(_metadataOfBaselinedRecords, { from: accounts[1] });
         });
 
         it("Check event of BaselinedRecordCreated", async () => {
             /// [Retrieved-Event]: The "BaselinedRecordCreated" event of the BasedRecords.sol
             let events = await baselinedRecords.getPastEvents('BaselinedRecordCreated', {
-                filter: {}, // Using an array means OR: e.g. 20 or 23
+                filter: {},  /// [Note]: If "index" is used for some event property, index number is specified
                 fromBlock: 0,
                 toBlock: 'latest'
             });
