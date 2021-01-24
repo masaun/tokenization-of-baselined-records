@@ -86,16 +86,16 @@ contract("Tokenization", function(accounts) {
             const baselinedRecord1 = web3.utils.asciiToHex("Baselined Record 1");  /// [Note]: Convert from string to bytes32 
             const baselinedRecord2 = web3.utils.asciiToHex("Baselined Record 2");  /// [Note]: Convert from string to bytes32
             const baselinedRecord3 = web3.utils.asciiToHex("Baselined Record 3");  /// [Note]: Convert from string to bytes32
-
             // const baselinedRecord1 = web3.utils.fromAscii("Baselined Record 1");  /// [Note]: Convert from string to bytes32 
             // const baselinedRecord2 = web3.utils.fromAscii("Baselined Record 2");  /// [Note]: Convert from string to bytes32
             // const baselinedRecord3 = web3.utils.fromAscii("Baselined Record 3");  /// [Note]: Convert from string to bytes32
-
             console.log('=== baselinedRecord1 ===', baselinedRecord1);
+            console.log('=== baselinedRecord2 ===', baselinedRecord2);
+            console.log('=== baselinedRecord3 ===', baselinedRecord3);
 
-            let _metadataOfBaselinedRecords = [baselinedRecord1, baselinedRecord2, baselinedRecord3];        
-
-            await tokenization.createBrToken(_metadataOfBaselinedRecords, { from: accounts[1] });
+            const _metadataOfBaselinedRecords = [baselinedRecord1, baselinedRecord2, baselinedRecord3];                 
+            const txReceipt = await tokenization.createBrToken(_metadataOfBaselinedRecords, { from: accounts[1] });
+            console.log('\n=== txReceipt of createBrToken() ===', txReceipt);
         });
 
         it("Check event of BaselinedRecordCreated", async () => {
@@ -105,7 +105,7 @@ contract("Tokenization", function(accounts) {
                 fromBlock: 0,
                 toBlock: 'latest'
             });
-            console.log('=== events ===', events);  /// [Result]: Successful to retrieve event log
+            console.log('\n=== events ===', events);  /// [Result]: Successful to retrieve event log
         });
 
     });
