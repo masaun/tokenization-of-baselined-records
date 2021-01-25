@@ -14,4 +14,9 @@ contract GroupPool {
      */
     function depositETH() public returns (bool) {}
 
+    /**
+     * @notice - Share gas cost between members of a group
+     */
+    function gasCostSharing() public returns (bool) {}
+
 }
