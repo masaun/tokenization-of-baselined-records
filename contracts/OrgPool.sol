@@ -1,11 +1,16 @@
 pragma solidity ^0.6.9;
 pragma experimental ABIEncoderV2;
 
+import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
+
 
 /***
  * @title - The Organization Pool contract
  **/
 contract OrgPool {
+    using SafeMath for uint;
+
+    address[] orgAddresses;  /// All organizations addresses
 
     address ORG_POOL;
     address payable ORG_POOL_PAYABLE;
@@ -23,9 +28,9 @@ contract OrgPool {
 
         /// Receive specified-amount of Ether
         ORG_POOL_PAYABLE.call{value: amountDeposited}{gas: 53000}("");  /// [Note]: This is the recommended-syntax version
-        //ORG_POOL_PAYABLE.call.value(amountDeposited).gas(53000)("");  /// [Note]: This is the deprecated-syntax version
+        //ORG_POOL_PAYABLE.call.value(amountDeposited).gas(53000)("");  /// [Note]: It works. But, this is the deprecated-syntax version
 
-        //require(address(this).call.value(msg.value).gas(35000)(), "Transferring ETH was fail");
+        //require(ORG_POOL_PAYABLE.call.value(amountDeposited).gas(53000)(""), "Transferring ETH from an user's wallet to the OrgPool contract was fail");
     }
 
     /**
@@ -33,16 +38,15 @@ contract OrgPool {
      */
     function depositETHFromAllOrgs() public payable returns (bool) {
         /// [Todo]: Add a logic
-        address[] memory orgAddresses;
         uint amountOfDeposit;  /// Amount of deposit of each organization
     }
 
     /**
      * @notice - Share gas cost between registered-organizations
+     * @param gasCostSpent - Gas cost (amount) when the token contract was deployed.
      */
-    function gasCostSharing() public returns (bool) {
-
-
+    function gasCostSharing(uint gasCostSpent) public returns (bool) {
+        //gasCostSpent.div(orgAddresses.length);
     }
 
 }
