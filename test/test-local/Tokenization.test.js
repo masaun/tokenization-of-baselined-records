@@ -195,8 +195,18 @@ contract("Tokenization", function(accounts) {
             console.log('\n=== gas-used for deployment of a new BrToken ===', gasUsedForDeployment);
         });
 
+        it("Assign the deployer address (accounts[0]) as a manager address", async () => {
+            await orgRegistry.assignManager(accounts[0]);
+            const newManager = await erc1820Registry.getManager(ORG_REGISTRY);
+            const newManagerThroughOrgContract = await orgRegistry.getManager();   /// [Note]: Same with erc1820Registry.getManager() above
+
+            console.log('\n=== newManager ===', newManager);
+            assert.equal(newManager, accounts[0], "A new manager should be deployer address (accounts[0])");
+            assert.equal(newManagerThroughOrgContract, accounts[0], "A new manager should be deployer address (accounts[0])");
+        });            
+
         it("Gas cost is paid from the OrgPool contract to manager address (as the gas-cost sharing)", async () => {
-            const manager = accounts[0];
+            const manager = await orgRegistry.getManager();
             const txReceipt = await orgPool.gasCostSharing(manager, gasUsedForDeployment, { from: manager });
         });
 
@@ -210,7 +220,6 @@ contract("Tokenization", function(accounts) {
         //     );
         // });
     });
-
 
 
 
