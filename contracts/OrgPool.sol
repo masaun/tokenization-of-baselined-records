@@ -18,8 +18,17 @@ contract OrgPool {
     }
 
     /**
+     * @notice - ETH are deposited into the Organization Pool from all organizations
+     */
+    function depositETHFromAllOrgs() public payable returns (bool) {
+        /// [Todo]: Add a logic        
+    }
+
+    /**
      * @notice - Share gas cost between registered-organizations
      */
-    function gasCostSharing() public returns (bool) {}
+    function gasCostSharing() public returns (bool) {
+
+    }
 
 }
