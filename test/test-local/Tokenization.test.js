@@ -195,7 +195,7 @@ contract("Tokenization", function(accounts) {
             console.log('\n=== gas-used for deployment of a new BrToken ===', gasUsedForDeployment);
         });
 
-        it("ETH balance of the OrgPool should be 3 ETH minus gas-used (after ETH is deposited by an organization)", async () => {
+        it("ETH balance of the OrgPool should be 3 ETH minus gas-used (after a new BrToken contract was deployed)", async () => {
             const currentETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
             console.log(`\n=== ETH balance of the OrgPool contract: ${String(currentETHbalanceOfOrgPool)} wei ===`);
             assert.equal(
