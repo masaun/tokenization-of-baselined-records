@@ -22,8 +22,8 @@ contract OrgPool {
         uint amountDeposited = 1 ether;  /// [Note]: This is an example amount of deposit of ETH 
 
         /// Receive specified-amount of Ether
-        ORG_POOL_PAYABLE.call.value(amountDeposited).gas(53000)("");   
-        //ORG_POOL_PAYABLE.call{value: amountDeposited}.gas(35000)();
+        ORG_POOL_PAYABLE.call{value: amountDeposited}{gas: 53000}("");  /// [Note]: This is the recommended-syntax version
+        //ORG_POOL_PAYABLE.call.value(amountDeposited).gas(53000)("");  /// [Note]: This is the deprecated-syntax version
 
         //require(address(this).call.value(msg.value).gas(35000)(), "Transferring ETH was fail");
     }
