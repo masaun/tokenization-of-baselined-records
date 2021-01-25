@@ -121,7 +121,7 @@ contract("Tokenization", function(accounts) {
                 fromBlock: 0,
                 toBlock: 'latest'
             });
-            console.log('\n=== Event log of RegisterOrg ===', events[0].returnValues);  /// [Result]: Successful to retrieve event log
+            console.log("\n=== Event log of RegisterOrg ===", events[0].returnValues);  /// [Result]: Successful to retrieve event log
         });
 
         it("orgCount should be 1", async () => {
@@ -160,7 +160,7 @@ contract("Tokenization", function(accounts) {
                 fromBlock: 0,
                 toBlock: 'latest'
             });
-            console.log('\n=== Event log of BaselinedRecordCreated ===', events[0].returnValues);  /// [Result]: Successful to retrieve event log
+            console.log("\n=== Event log of BaselinedRecordCreated ===", events[0].returnValues);  /// [Result]: Successful to retrieve event log
         });
 
     });
@@ -168,20 +168,38 @@ contract("Tokenization", function(accounts) {
 
     describe("[TK06]: The solution must support many cost-sharing options for token contracts administration and deployment.", () => {
         let initialETHbalanceOfOrgPool;
+        let initialETHbalanceOfManager;
         let gasUsedForDeployment;
+        let gasUsedForDeployment2;        
 
         it("3 ETH is deposited by an organization", async () => {
             const ethAmount = web3.utils.toWei('3', 'ether');  /// 3 ETH
             const txReceipt = await orgPool.depositETH({ from: accounts[1], value: ethAmount });
 
-            const initialETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
-            console.log(`\n=== Initial ETH balance of the OrgPool contract: ${web3.utils.fromWei(String(initialETHbalanceOfOrgPool), 'ether')} ETH ===`);
+            initialETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
+            console.log(`\n=== ETH balance of the OrgPool contract (before a new BrToken is deployed): ${web3.utils.fromWei(String(initialETHbalanceOfOrgPool), 'ether')} ETH ===`);
             assert.equal(
                 initialETHbalanceOfOrgPool,
                 ethAmount,
-                "Initial ETH balance of the OrgPool contract should be 3 ETH"
+                "ETH balance of the OrgPool contract (before a new BrToken is deployed) should be 3 ETH"
             );
         });
+
+        it("Assign the deployer address (accounts[2]) as a manager address", async () => {
+            await orgRegistry.assignManager(accounts[2], { from: accounts[0] });
+            const newManager = await erc1820Registry.getManager(ORG_REGISTRY);
+            const newManagerThroughOrgContract = await orgRegistry.getManager();   /// [Note]: Same with erc1820Registry.getManager() above
+
+            console.log('\n=== newManager ===', newManager);
+            assert.equal(newManager, accounts[2], "A new manager should be deployer address (accounts[0])");
+            assert.equal(newManagerThroughOrgContract, accounts[2], "A new manager should be deployer address (accounts[0])");
+        });            
+
+        it("Check ETH balance of a manager (before a new BrToken is deployed)", async () => {
+            const manager = await orgRegistry.getManager();
+            initialETHbalanceOfManager = await orgPool.ETHBalanceOf(manager);
+            console.log(`\n=== ETH balance of manager (before a new BrToken is deployed): ${String(initialETHbalanceOfManager)} wei ===`);            
+        });            
 
         it("Deploy a new BrToken contract by the OrgPool contract (Create a new BrToken with multiple baselined records)", async () => {
             const baselinedRecord4 = web3.utils.asciiToHex("Baselined Record 4");  /// [Note]: Convert from string to bytes32 
@@ -189,36 +207,41 @@ contract("Tokenization", function(accounts) {
             const baselinedRecord6 = web3.utils.asciiToHex("Baselined Record 6");  /// [Note]: Convert from string to bytes32
 
             const _metadataOfBaselinedRecords = [baselinedRecord4, baselinedRecord5, baselinedRecord6];                 
-            const txReceipt = await orgPool.createBrTokenByOrgPool(_metadataOfBaselinedRecords, { from: accounts[0] });
+            const txReceipt = await tokenization.createBrToken(_metadataOfBaselinedRecords, { from: accounts[2] });
 
             gasUsedForDeployment = txReceipt.receipt.gasUsed;
             console.log('\n=== gas-used for deployment of a new BrToken ===', gasUsedForDeployment);
         });
 
-        it("Assign the deployer address (accounts[0]) as a manager address", async () => {
-            await orgRegistry.assignManager(accounts[0]);
-            const newManager = await erc1820Registry.getManager(ORG_REGISTRY);
-            const newManagerThroughOrgContract = await orgRegistry.getManager();   /// [Note]: Same with erc1820Registry.getManager() above
-
-            console.log('\n=== newManager ===', newManager);
-            assert.equal(newManager, accounts[0], "A new manager should be deployer address (accounts[0])");
-            assert.equal(newManagerThroughOrgContract, accounts[0], "A new manager should be deployer address (accounts[0])");
-        });            
-
         it("Gas cost is paid from the OrgPool contract to manager address (as the gas-cost sharing)", async () => {
             const manager = await orgRegistry.getManager();
             const txReceipt = await orgPool.gasCostSharing(manager, gasUsedForDeployment, { from: manager });
+
+            gasUsedForDeployment2 = txReceipt.receipt.gasUsed;
+            console.log('\n=== gas-used for executing the gasCostSharing() method ===', gasUsedForDeployment2);
         });
 
-        // it("ETH balance of the OrgPool should be 3 ETH minus gas-used (after a new BrToken contract was deployed)", async () => {
-        //     const currentETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
-        //     console.log(`\n=== ETH balance of the OrgPool contract: ${String(currentETHbalanceOfOrgPool)} wei ===`);
-        //     assert.equal(
-        //         String(Number(initialETHbalanceOfOrgPool) - Number(gasUsedForDeployment)),
-        //         String(Number(currentETHbalanceOfOrgPool)),
-        //         "ETH balance of the OrgPool contract should be 3 ETH minus gas-used"
-        //     );
-        // });
+        it("ETH balance of manager address after a new BrToken contract was deployed should be same with one before a new BrToken contract deployed", async () => {
+            const manager = await orgRegistry.getManager();
+            const currentETHbalanceOfManager = await orgPool.ETHBalanceOf(manager);
+            console.log(`\n=== ETH balance of manager (after a new BrToken is deployed): ${String(currentETHbalanceOfManager)} wei ===`);
+
+            // assert.equal(
+            //     Number(String(initialETHbalanceOfManager)) + Number(gasUsedForDeployment) - Number(gasUsedForDeployment2),
+            //     Number(String(currentETHbalanceOfManager)),
+            //     "ETH balance of manager should be ETH balance of manager (after a new BrToken is deployed) plus gas-used"
+            // );
+        });
+
+        it("ETH balance of the OrgPool should be 3 ETH minus gas-used (after a new BrToken contract was deployed)", async () => {
+            const currentETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
+            console.log(`\n=== ETH balance of the OrgPool contract: ${String(currentETHbalanceOfOrgPool)} wei ===`);
+            assert.equal(
+                Number(String(initialETHbalanceOfOrgPool)) - Number(gasUsedForDeployment),
+                Number(String(currentETHbalanceOfOrgPool)),
+                "ETH balance of the OrgPool contract should be 3 ETH minus gas-used"
+            );
+        });
     });
 
 
