@@ -3,6 +3,8 @@ pragma experimental ABIEncoderV2;
 
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 
+import { Tokenization } from "./Tokenization.sol";
+
 
 /***
  * @title - The Organization Pool contract
@@ -10,10 +12,14 @@ import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 contract OrgPool {
     using SafeMath for uint;
 
+    Tokenization public tokenization;
+
     address ORG_POOL;
     address payable ORG_POOL_PAYABLE;
 
-    constructor() public {
+    constructor(Tokenization _tokenization) public {
+        tokenization = _tokenization;
+
         ORG_POOL = address(this);
         ORG_POOL_PAYABLE = address(uint160(ORG_POOL));  /// [Note]: The payable version of this contract address
     }
@@ -39,6 +45,14 @@ contract OrgPool {
         address[] memory orgAddresses;  /// All organizations addresses
         uint amountOfDeposit;  /// Amount of deposit of each organization
     }
+
+    /**
+     * @notice - Create a new BrToken by the OrgPool contract
+     */
+    function createBrTokenByOrgPool(bytes32[] memory _metadataOfBaselinedRecords) public returns (bool) {
+        tokenization.createBrToken(_metadataOfBaselinedRecords);  /// [Note]: Gas cost is paid by the OrgPool
+    }
+
 
     /**
      * @notice - Share gas cost between registered-organizations

@@ -45,11 +45,6 @@ contract("Tokenization", function(accounts) {
             ORG_REGISTRY = orgRegistry.address;
         });
 
-        it("Deploy the OrgPool contract instance", async () => {
-            orgPool = await OrgPool.new({ from: accounts[0] });
-            ORG_POOL = orgPool.address;
-        });
-
         it("Deploy the BaselinedRecords contract instance", async () => {
             baselinedRecords = await BaselinedRecords.new({ from: accounts[0] });
             BASELINED_RECORDS = baselinedRecords.address;
@@ -57,6 +52,12 @@ contract("Tokenization", function(accounts) {
 
         it("Deploy the Tokenization contract instance", async () => {
             tokenization = await Tokenization.new(BASELINED_RECORDS, ORG_REGISTRY, { from: accounts[0] });
+            TOKENNIZATION = tokenization.address;
+        });
+
+        it("Deploy the OrgPool contract instance", async () => {
+            orgPool = await OrgPool.new(TOKENNIZATION, { from: accounts[0] });
+            ORG_POOL = orgPool.address;
         });
     });
 
@@ -173,7 +174,7 @@ contract("Tokenization", function(accounts) {
             const txReceipt = await orgPool.depositETH({ from: accounts[1], value: ethAmount });
 
             const ETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
-            console.log('\n=== ETHbalanceOfOrgPool ===', String(ETHbalanceOfOrgPool));
+            console.log(`\n=== ETHbalanceOfOrgPool: ${web3.utils.fromWei(String(ETHbalanceOfOrgPool), 'ether')} ETH ===`);
             assert.equal(
                 ETHbalanceOfOrgPool,
                 ethAmount,
@@ -181,17 +182,19 @@ contract("Tokenization", function(accounts) {
             );
         });
 
-        // it("Deploy a new BrToken contract by the OrgPool contract (Create a new BrToken with multiple baselined records)", async () => {
-        //     const baselinedRecord4 = web3.utils.asciiToHex("Baselined Record 4");  /// [Note]: Convert from string to bytes32 
-        //     const baselinedRecord5 = web3.utils.asciiToHex("Baselined Record 5");  /// [Note]: Convert from string to bytes32
-        //     const baselinedRecord6 = web3.utils.asciiToHex("Baselined Record 6");  /// [Note]: Convert from string to bytes32
+        it("Deploy a new BrToken contract by the OrgPool contract (Create a new BrToken with multiple baselined records)", async () => {
+            const baselinedRecord4 = web3.utils.asciiToHex("Baselined Record 4");  /// [Note]: Convert from string to bytes32 
+            const baselinedRecord5 = web3.utils.asciiToHex("Baselined Record 5");  /// [Note]: Convert from string to bytes32
+            const baselinedRecord6 = web3.utils.asciiToHex("Baselined Record 6");  /// [Note]: Convert from string to bytes32
 
-        //     const _metadataOfBaselinedRecords = [baselinedRecord4, baselinedRecord5, baselinedRecord6];                 
-        //     const txReceipt = await tokenization.createBrToken(_metadataOfBaselinedRecords, { from: ORG_POOL });
+            const _metadataOfBaselinedRecords = [baselinedRecord4, baselinedRecord5, baselinedRecord6];                 
+            const txReceipt = await orgPool.createBrTokenByOrgPool(_metadataOfBaselinedRecords, { from: accounts[0] });
 
-        //     gasUsedForDeployment = txReceipt.receipt.gasUsed;
-        //     console.log('\n=== gas-used for deployment of a new BrToken ===', gasUsedForDeployment);
-        // });
+            gasUsedForDeployment = txReceipt.receipt.gasUsed;
+            console.log('\n=== gas-used for deployment of a new BrToken ===', gasUsedForDeployment);
+        });
+
+
     });
 
 
