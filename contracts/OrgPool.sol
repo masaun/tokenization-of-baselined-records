@@ -3,19 +3,19 @@ pragma experimental ABIEncoderV2;
 
 
 /***
- * @title - The Group Pool contract
+ * @title - The Organization Pool contract
  **/
-contract GroupPool {
+contract OrgPool {
 
     constructor() public {}
 
     /**
-     * @notice - An organization of the group deposit ETH into the Organization Pool
+     * @notice - An organization deposit ETH into the Organization Pool
      */
     function depositETH() public returns (bool) {}
 
     /**
-     * @notice - Share gas cost between members of a group
+     * @notice - Share gas cost between registered-organizations
      */
     function gasCostSharing() public returns (bool) {}
 
