@@ -167,18 +167,19 @@ contract("Tokenization", function(accounts) {
 
 
     describe("[TK06]: The solution must support many cost-sharing options for token contracts administration and deployment.", () => {
+        let initialETHbalanceOfOrgPool;
         let gasUsedForDeployment;
 
         it("3 ETH is deposited by an organization", async () => {
             const ethAmount = web3.utils.toWei('3', 'ether');  /// 3 ETH
             const txReceipt = await orgPool.depositETH({ from: accounts[1], value: ethAmount });
 
-            const ETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
-            console.log(`\n=== ETHbalanceOfOrgPool: ${web3.utils.fromWei(String(ETHbalanceOfOrgPool), 'ether')} ETH ===`);
+            const initialETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
+            console.log(`\n=== Initial ETH balance of the OrgPool contract: ${web3.utils.fromWei(String(initialETHbalanceOfOrgPool), 'ether')} ETH ===`);
             assert.equal(
-                ETHbalanceOfOrgPool,
+                initialETHbalanceOfOrgPool,
                 ethAmount,
-                "ETH balance of the OrgPool contract should be 3 ETH"
+                "Initial ETH balance of the OrgPool contract should be 3 ETH"
             );
         });
 
@@ -194,7 +195,15 @@ contract("Tokenization", function(accounts) {
             console.log('\n=== gas-used for deployment of a new BrToken ===', gasUsedForDeployment);
         });
 
-
+        it("ETH balance of the OrgPool should be 3 ETH minus gas-used (after ETH is deposited by an organization)", async () => {
+            const currentETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
+            console.log(`\n=== ETH balance of the OrgPool contract: ${String(currentETHbalanceOfOrgPool)} wei ===`);
+            assert.equal(
+                String(Number(initialETHbalanceOfOrgPool) - Number(gasUsedForDeployment)),
+                String(Number(currentETHbalanceOfOrgPool)),
+                "ETH balance of the OrgPool contract should be 3 ETH minus gas-used"
+            );
+        });
     });
 
 
