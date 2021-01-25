@@ -195,15 +195,20 @@ contract("Tokenization", function(accounts) {
             console.log('\n=== gas-used for deployment of a new BrToken ===', gasUsedForDeployment);
         });
 
-        it("ETH balance of the OrgPool should be 3 ETH minus gas-used (after a new BrToken contract was deployed)", async () => {
-            const currentETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
-            console.log(`\n=== ETH balance of the OrgPool contract: ${String(currentETHbalanceOfOrgPool)} wei ===`);
-            assert.equal(
-                String(Number(initialETHbalanceOfOrgPool) - Number(gasUsedForDeployment)),
-                String(Number(currentETHbalanceOfOrgPool)),
-                "ETH balance of the OrgPool contract should be 3 ETH minus gas-used"
-            );
+        it("Gas cost is paid from the OrgPool contract to manager address (as the gas-cost sharing)", async () => {
+            const manager = accounts[0];
+            const txReceipt = await orgPool.gasCostSharing(manager, gasUsedForDeployment, { from: manager });
         });
+
+        // it("ETH balance of the OrgPool should be 3 ETH minus gas-used (after a new BrToken contract was deployed)", async () => {
+        //     const currentETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
+        //     console.log(`\n=== ETH balance of the OrgPool contract: ${String(currentETHbalanceOfOrgPool)} wei ===`);
+        //     assert.equal(
+        //         String(Number(initialETHbalanceOfOrgPool) - Number(gasUsedForDeployment)),
+        //         String(Number(currentETHbalanceOfOrgPool)),
+        //         "ETH balance of the OrgPool contract should be 3 ETH minus gas-used"
+        //     );
+        // });
     });
 
 

@@ -55,11 +55,11 @@ contract OrgPool {
 
 
     /**
-     * @notice - Share gas cost between registered-organizations
-     * @param gasCostSpent - Gas cost (amount) when the token contract was deployed.
+     * @notice - Share gas cost between registered-organizations. 
+     * @param gasCostSpent - Gas cost (amount) when the token contract was deployed. Amount of gasCostSpent is transferred into the manager address from this OrgPool contract
      */
-    function gasCostSharing(uint gasCostSpent) public returns (bool) {
-        //gasCostSpent.div(orgAddresses.length);
+    function gasCostSharing(address payable manager, uint gasCostSpent) public payable returns (bool) {
+        manager.transfer(gasCostSpent);
     }
 
 
