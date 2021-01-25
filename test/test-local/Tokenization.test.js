@@ -121,7 +121,7 @@ contract("Tokenization", function(accounts) {
                 fromBlock: 0,
                 toBlock: 'latest'
             });
-            console.log('\n=== Event log of RegisterOrg ===', events);  /// [Result]: Successful to retrieve event log
+            console.log('\n=== Event log of RegisterOrg ===', events[0].returnValues);  /// [Result]: Successful to retrieve event log
         });
 
         it("orgCount should be 1", async () => {
@@ -136,7 +136,7 @@ contract("Tokenization", function(accounts) {
         });
     });
 
-    describe("[TK01]: The solution must support the deployment of one or many baselined assets within one single token contract.", () => {
+    describe("[TK01]: The solution must support the deployment of one or many baselined assets within one single token contract. + [TK02]: The solution must support the deployment of many token contracts in a cost-effective way.", () => {
         it("Create a new BrToken with multiple baselined records", async () => {
             const baselinedRecord1 = web3.utils.asciiToHex("Baselined Record 1");  /// [Note]: Convert from string to bytes32 
             const baselinedRecord2 = web3.utils.asciiToHex("Baselined Record 2");  /// [Note]: Convert from string to bytes32
@@ -160,7 +160,7 @@ contract("Tokenization", function(accounts) {
                 fromBlock: 0,
                 toBlock: 'latest'
             });
-            console.log('\n=== Event log of BaselinedRecordCreated ===', events);  /// [Result]: Successful to retrieve event log
+            console.log('\n=== Event log of BaselinedRecordCreated ===', events[0].returnValues);  /// [Result]: Successful to retrieve event log
         });
 
     });
@@ -223,13 +223,13 @@ contract("Tokenization", function(accounts) {
 
 
 
-    ///------------------------------------------
-    /// Tests that has not been implemented yet.
-    ///------------------------------------------
+    ///---------------------------------------------------------
+    /// Tests for features below has not been implemented yet.
+    ///---------------------------------------------------------
 
     //describe("[TK01]: The solution must support the deployment of one or many baselined assets within one single token contract.", () => {});
 
-    describe("[TK02]: The solution must support the deployment of many token contracts in a cost-effective way.", () => {});
+    //describe("[TK02]: The solution must support the deployment of many token contracts in a cost-effective way.", () => {});
 
     describe("[TK03]: The solution must provide a mechanism to administer all deployed token contracts (i.e. revoke investor access, disable trading on all contracts etc).", () => {});
 
