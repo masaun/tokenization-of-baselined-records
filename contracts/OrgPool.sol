@@ -18,10 +18,12 @@ contract OrgPool {
     }
 
     /**
-     * @notice - ETH are deposited into the Organization Pool from all organizations
+     * @notice - ETH are deposited into the Organization Pool from all organizations (as monthly membership fees, etc...)
      */
     function depositETHFromAllOrgs() public payable returns (bool) {
-        /// [Todo]: Add a logic        
+        /// [Todo]: Add a logic
+        address[] payable orgAddresses;
+        uint amountOfDeposit;  /// Amount of deposit of each organization
     }
 
     /**
