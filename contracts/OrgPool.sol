@@ -10,8 +10,6 @@ import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 contract OrgPool {
     using SafeMath for uint;
 
-    address[] orgAddresses;  /// All organizations addresses
-
     address ORG_POOL;
     address payable ORG_POOL_PAYABLE;
 
@@ -38,6 +36,7 @@ contract OrgPool {
      */
     function depositETHFromAllOrgs() public payable returns (bool) {
         /// [Todo]: Add a logic
+        address[] memory orgAddresses;  /// All organizations addresses
         uint amountOfDeposit;  /// Amount of deposit of each organization
     }
 
@@ -47,6 +46,18 @@ contract OrgPool {
      */
     function gasCostSharing(uint gasCostSpent) public returns (bool) {
         //gasCostSpent.div(orgAddresses.length);
+    }
+
+
+    /////////////////////
+    /// Getter methods
+    /////////////////////
+
+    /**
+     * @notice - Retrieve ETH balance
+     */
+    function ETHBalanceOf(address walletAddress) public view returns (uint _ETHBalance) {
+        return walletAddress.balance;
     }
 
 }

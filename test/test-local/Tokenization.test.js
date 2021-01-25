@@ -5,6 +5,7 @@ const web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8545'
 /// Artifact of smart contracts 
 const Tokenization = artifacts.require("Tokenization");
 const BaselinedRecords = artifacts.require("BaselinedRecords");
+const OrgPool = artifacts.require("OrgPool");
 const OrgRegistry = artifacts.require("OrgRegistry");
 const ERC1820Registry = artifacts.require("ERC1820Registry");
 
@@ -16,12 +17,14 @@ contract("Tokenization", function(accounts) {
     /// Global Tokenization contract instance
     let tokenization;
     let baselinedRecords;
+    let orgPool;
     let orgRegistry;
     let erc1820Registry;
 
     /// Global variable for each contract addresses
     let TOKENNIZATION;
     let BASELINED_RECORDS;
+    let ORG_POOL;
     let ORG_REGISTRY;
     let ERC1820_REGISTRY;
 
@@ -40,6 +43,11 @@ contract("Tokenization", function(accounts) {
         it("Deploy the OrgRegistry contract instance", async () => {
             orgRegistry = await OrgRegistry.new(ERC1820_REGISTRY, { from: accounts[0] });
             ORG_REGISTRY = orgRegistry.address;
+        });
+
+        it("Deploy the OrgPool contract instance", async () => {
+            orgPool = await OrgPool.new({ from: accounts[0] });
+            ORG_POOL = orgPool.address;
         });
 
         it("Deploy the BaselinedRecords contract instance", async () => {
@@ -156,8 +164,34 @@ contract("Tokenization", function(accounts) {
 
     });
 
+
     describe("[TK06]: The solution must support many cost-sharing options for token contracts administration and deployment.", () => {
-        /// [Todo]: Add cost-sharing method 
+        let gasUsedForDeployment;
+
+        it("3 ETH is deposited by an organization", async () => {
+            const ethAmount = web3.utils.toWei('3', 'ether');  /// 3 ETH
+            const txReceipt = await orgPool.depositETH({ from: accounts[1], value: ethAmount });
+
+            const ETHbalanceOfOrgPool = await orgPool.ETHBalanceOf(ORG_POOL);
+            console.log('\n=== ETHbalanceOfOrgPool ===', String(ETHbalanceOfOrgPool));
+            assert.equal(
+                ETHbalanceOfOrgPool,
+                ethAmount,
+                "ETH balance of the OrgPool contract should be 3 ETH"
+            );
+        });
+
+        // it("Deploy a new BrToken contract by the OrgPool contract (Create a new BrToken with multiple baselined records)", async () => {
+        //     const baselinedRecord4 = web3.utils.asciiToHex("Baselined Record 4");  /// [Note]: Convert from string to bytes32 
+        //     const baselinedRecord5 = web3.utils.asciiToHex("Baselined Record 5");  /// [Note]: Convert from string to bytes32
+        //     const baselinedRecord6 = web3.utils.asciiToHex("Baselined Record 6");  /// [Note]: Convert from string to bytes32
+
+        //     const _metadataOfBaselinedRecords = [baselinedRecord4, baselinedRecord5, baselinedRecord6];                 
+        //     const txReceipt = await tokenization.createBrToken(_metadataOfBaselinedRecords, { from: ORG_POOL });
+
+        //     gasUsedForDeployment = txReceipt.receipt.gasUsed;
+        //     console.log('\n=== gas-used for deployment of a new BrToken ===', gasUsedForDeployment);
+        // });
     });
 
 
