@@ -12,8 +12,8 @@ contract OrgPool {
     /**
      * @notice - An organization deposit ETH into the Organization Pool
      */
-    function depositETH() public returns (bool) {
-        address orgAddress = msg.sender;
+    function depositETH() public payable returns (bool) {
+        address payable orgAddress = msg.sender;
         orgAddress.transfer(msg.value);
     }
 
