@@ -9,8 +9,8 @@ import { OrgRegistry } from "./baseline/registry/OrgRegistry.sol";
 
 
 /***
- * @title - Tokenization contract
- * @notice - This is the factory contract in order to create BrToken
+ * @title - The tokenization contract
+ * @notice - This is the factory contract in order to create a new BrToken
  **/
 contract Tokenization {
 
