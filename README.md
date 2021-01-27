@@ -9,7 +9,8 @@
 ***
 
 ## 【Workflow】
-- 
+- The diagram of workflow
+![【Diagram】Tokenization Of Baselined Records](https://user-images.githubusercontent.com/19357502/106000603-59cea880-60f2-11eb-82f8-51e84e8ece7b.jpg)
 
 
 &nbsp;
