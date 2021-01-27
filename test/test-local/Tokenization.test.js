@@ -56,7 +56,7 @@ contract("Tokenization", function(accounts) {
         });
 
         it("Deploy the OrgPool contract instance", async () => {
-            orgPool = await OrgPool.new(TOKENNIZATION, { from: accounts[0] });
+            orgPool = await OrgPool.new({ from: accounts[0] });
             ORG_POOL = orgPool.address;
         });
     });
