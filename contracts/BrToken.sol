@@ -12,7 +12,7 @@ import { BaselinedRecords } from "./baselined-records/BaselinedRecords.sol";
 
 /***
  * @title - BrToken contract
- * @notice - This is the smart contract that retain the baselined-records
+ * @notice - This is the Baseline Records Token contract that retain the baselined-records
  **/
 contract BrToken is ERC20, AccessControl {
     using SafeMath for uint;
